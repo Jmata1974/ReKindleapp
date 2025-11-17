@@ -1,31 +1,42 @@
-const MOCK_REMINDERS = [
+const MOCK_CONTACTS = [
   {
     id: 1,
-    contact: "Mom",
-    cadence: "Weekly",
+    name: "Mom",
+    orbit: "Inner",
     lastContact: "8 days ago",
-    nextDue: "Today",
-    note: "Ask about her doctor appointment.",
+    tags: ["Family"],
   },
   {
     id: 2,
-    contact: "Jess (old bandmate)",
-    cadence: "Monthly",
+    name: "Jess Alvarez",
+    orbit: "Middle",
     lastContact: "3 weeks ago",
-    nextDue: "In 4 days",
-    note: "Send her the new demo.",
+    tags: ["Bandmate", "Creative"],
   },
   {
     id: 3,
-    contact: "Connor",
-    cadence: "Every 2 weeks",
+    name: "Connor",
+    orbit: "Inner",
     lastContact: "11 days ago",
-    nextDue: "Tomorrow",
-    note: "Check on Buenos Aires planning.",
+    tags: ["Family"],
+  },
+  {
+    id: 4,
+    name: "Lennon (Ethan)",
+    orbit: "Inner",
+    lastContact: "2 days ago",
+    tags: ["Family"],
+  },
+  {
+    id: 5,
+    name: "Sofia",
+    orbit: "Inner",
+    lastContact: "Today",
+    tags: ["Partner"],
   },
 ];
 
-export default function Reminders() {
+export default function Contacts() {
   return (
     <div
       style={{
@@ -35,7 +46,7 @@ export default function Reminders() {
         alignItems: "flex-start",
       }}
     >
-      {/* Left: Reminder list */}
+      {/* Left: Contact list */}
       <section
         style={{
           borderRadius: "12px",
@@ -54,9 +65,9 @@ export default function Reminders() {
           }}
         >
           <div>
-            <h1 style={{ margin: 0, fontSize: "1.25rem" }}>Reminders</h1>
+            <h1 style={{ margin: 0, fontSize: "1.25rem" }}>Contacts</h1>
             <p style={{ margin: 0, fontSize: "0.9rem", color: "#666" }}>
-              Smart nudges so important people don&apos;t slip away.
+              Everyone in your orbit, in one place.
             </p>
           </div>
           <button
@@ -70,7 +81,7 @@ export default function Reminders() {
               color: "#ffffff",
             }}
           >
-            + New reminder
+            + Add contact
           </button>
         </header>
 
@@ -83,29 +94,25 @@ export default function Reminders() {
         >
           <thead>
             <tr style={{ textAlign: "left", color: "#6b7280" }}>
-              <th style={{ padding: "0.4rem" }}>Contact</th>
-              <th style={{ padding: "0.4rem" }}>Cadence</th>
+              <th style={{ padding: "0.4rem" }}>Name</th>
+              <th style={{ padding: "0.4rem" }}>Orbit</th>
               <th style={{ padding: "0.4rem" }}>Last contact</th>
-              <th style={{ padding: "0.4rem" }}>Next due</th>
-              <th style={{ padding: "0.4rem" }}>Note</th>
+              <th style={{ padding: "0.4rem" }}>Tags</th>
             </tr>
           </thead>
           <tbody>
-            {MOCK_REMINDERS.map((r, index) => (
+            {MOCK_CONTACTS.map((c, index) => (
               <tr
-                key={r.id}
+                key={c.id}
                 style={{
                   background: index % 2 === 0 ? "#f9fafb" : "#ffffff",
                 }}
               >
-                <td style={{ padding: "0.5rem" }}>{r.contact}</td>
-                <td style={{ padding: "0.5rem" }}>{r.cadence}</td>
-                <td style={{ padding: "0.5rem" }}>{r.lastContact}</td>
-                <td style={{ padding: "0.5rem", fontWeight: 600 }}>
-                  {r.nextDue}
-                </td>
+                <td style={{ padding: "0.5rem" }}>{c.name}</td>
+                <td style={{ padding: "0.5rem" }}>{c.orbit}</td>
+                <td style={{ padding: "0.5rem" }}>{c.lastContact}</td>
                 <td style={{ padding: "0.5rem", color: "#4b5563" }}>
-                  {r.note}
+                  {c.tags.join(", ")}
                 </td>
               </tr>
             ))}
@@ -113,7 +120,7 @@ export default function Reminders() {
         </table>
       </section>
 
-      {/* Right: Settings / summary */}
+      {/* Right: Import / quick actions */}
       <aside
         style={{
           borderRadius: "12px",
@@ -127,21 +134,37 @@ export default function Reminders() {
           gap: "0.75rem",
         }}
       >
-        <h2 style={{ margin: 0, fontSize: "1rem" }}>Reminder settings</h2>
+        <h2 style={{ margin: 0, fontSize: "1rem" }}>Import & organize</h2>
         <p style={{ margin: 0, color: "#555" }}>
-          ReKindle can suggest cadences based on how often you naturally
-          talk to people, then nudge you when it&apos;s been a while.
+          ReKindle can pull contacts from your phone, Google, or a CSV, then help
+          you sort them into orbits.
         </p>
 
-        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <input type="checkbox" defaultChecked />
-          Enable AI-suggested cadences
-        </label>
+        <button
+          style={{
+            borderRadius: "8px",
+            border: "1px solid #e5e7eb",
+            padding: "0.6rem 0.9rem",
+            cursor: "pointer",
+            background: "#f9fafb",
+            textAlign: "left",
+          }}
+        >
+          📱 Import from phone / Google
+        </button>
 
-        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <input type="checkbox" defaultChecked />
-          Group low-priority contacts into weekly digest
-        </label>
+        <button
+          style={{
+            borderRadius: "8px",
+            border: "1px solid #e5e7eb",
+            padding: "0.6rem 0.9rem",
+            cursor: "pointer",
+            background: "#f9fafb",
+            textAlign: "left",
+          }}
+        >
+          📄 Upload CSV / spreadsheet
+        </button>
 
         <hr style={{ margin: "0.75rem 0" }} />
 
@@ -153,19 +176,12 @@ export default function Reminders() {
             border: "1px solid #e5e7eb",
           }}
         >
-          <strong>Today&apos;s nudges</strong>
-          <ul
-            style={{
-              listStyle: "disc",
-              paddingLeft: "1.2rem",
-              margin: "0.4rem 0 0",
-            }}
-          >
-            <li>Call Mom (weekly cadence, 1 day overdue).</li>
-            <li>
-              Send Jess a quick voice note about the demo you&apos;re working on.
-            </li>
-          </ul>
+          <strong>Pro tip</strong>
+          <p style={{ margin: "0.4rem 0 0", color: "#4b5563" }}>
+            Start with 15–25 people you genuinely care about. You can always add
+            more later, but ReKindle works best when your orbits feel intentional,
+            not overwhelming.
+          </p>
         </div>
       </aside>
     </div>

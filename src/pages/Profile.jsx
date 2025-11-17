@@ -1,89 +1,207 @@
-import React, { useState } from 'react';
-import CosmicBackground from '../components/CosmicBackground';
-import Navigation from '../components/Navigation';
-import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
-import { User, Mail, Shield, LogOut } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import BottomNavigation from '../components/BottomNavigation';
-import { motion } from 'framer-motion';
-
 export default function Profile() {
-  const { data: user } = useQuery({
-    queryKey: ['currentUser'],
-    queryFn: () => base44.auth.me(),
-    initialData: null
-  });
-
-  const theme = user?.theme || 'cosmic';
-
-  const handleLogout = () => {
-    base44.auth.logout();
-  };
-
   return (
-    <div className="relative w-full min-h-screen overflow-y-auto pb-32">
-      <CosmicBackground theme={theme} />
-      <Navigation currentPage="Profile" />
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1.4fr 2fr",
+        gap: "1.5rem",
+        alignItems: "flex-start",
+      }}
+    >
+      {/* Left: Your profile */}
+      <section
+        style={{
+          borderRadius: "12px",
+          border: "1px solid #eee",
+          padding: "1rem",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.04)",
+          background: "#ffffff",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.75rem",
+        }}
+      >
+        <header>
+          <h1 style={{ margin: 0, fontSize: "1.25rem" }}>Profile</h1>
+          <p
+            style={{
+              margin: "0.25rem 0 0",
+              fontSize: "0.9rem",
+              color: "#666",
+            }}
+          >
+            Tune how ReKindle feels and how it shows up in your life.
+          </p>
+        </header>
 
-      <div className="relative z-10 max-w-2xl mx-auto px-4 pt-24">
-        <h1 
-          className="text-4xl md:text-5xl font-bold text-white mb-12 text-center"
-          style={{ textShadow: '0 0 30px rgba(255, 220, 168, 0.5)' }}
+        <div
+          style={{
+            marginTop: "0.75rem",
+            display: "flex",
+            gap: "0.75rem",
+            alignItems: "center",
+          }}
         >
-          Profile
-        </h1>
-
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-8">
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center border-4 border-white/20 mb-4">
-              <span className="text-4xl font-bold text-white">
-                {user?.full_name?.[0]?.toUpperCase() || 'U'}
-              </span>
-            </div>
-            <h2 className="text-2xl font-bold text-white">{user?.full_name || 'User'}</h2>
+          <div
+            style={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "999px",
+              background: "#111827",
+              color: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: 600,
+              fontSize: "1rem",
+            }}
+          >
+            JM
           </div>
-
-          <div className="space-y-6">
-            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-              <Mail className="w-5 h-5 text-white/60" />
-              <div>
-                <div className="text-sm text-white/60 mb-1">Email</div>
-                <div className="text-white font-medium">{user?.email || 'Not available'}</div>
-              </div>
+          <div style={{ fontSize: "0.9rem" }}>
+            <div style={{ fontWeight: 600 }}>Jeremy Matamales</div>
+            <div style={{ color: "#6b7280", fontSize: "0.8rem" }}>
+              jskarma74@gmail.com
             </div>
-
-            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-              <Shield className="w-5 h-5 text-white/60" />
-              <div>
-                <div className="text-sm text-white/60 mb-1">Role</div>
-                <div className="text-white font-medium capitalize">{user?.role || 'User'}</div>
-              </div>
+            <div style={{ color: "#6b7280", fontSize: "0.8rem" }}>
+              Timezone: America/Los_Angeles
             </div>
-
-            <div className="flex items-center gap-4 p-4 bg-white/5 rounded-lg">
-              <User className="w-5 h-5 text-white/60" />
-              <div>
-                <div className="text-sm text-white/60 mb-1">Theme</div>
-                <div className="text-white font-medium capitalize">{user?.theme || 'Cosmic'}</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 pt-8 border-t border-white/10">
-            <Button
-              onClick={handleLogout}
-              variant="destructive"
-              className="w-full"
-            >
-              <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
-            </Button>
           </div>
         </div>
-      </div>
 
-      <BottomNavigation currentPage="Profile" />
+        <hr style={{ margin: "0.85rem 0" }} />
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.6rem",
+            fontSize: "0.85rem",
+          }}
+        >
+          <div>
+            <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+              Daily nudge window
+            </div>
+            <div style={{ fontWeight: 500 }}>6:00 pm – 9:00 pm</div>
+            <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+              ReKindle will try to surface reminders when you&apos;re most likely
+              to have a few minutes free.
+            </div>
+          </div>
+
+          <div>
+            <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+              Default cadence style
+            </div>
+            <div style={{ fontWeight: 500 }}>Gentle but intentional</div>
+            <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+              Prioritize a small set of meaningful relationships over a huge contact list.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Right: Preferences & app behavior */}
+      <section
+        style={{
+          borderRadius: "12px",
+          border: "1px solid #eee",
+          padding: "1rem",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.04)",
+          background: "#ffffff",
+          fontSize: "0.85rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.75rem",
+        }}
+      >
+        <h2 style={{ margin: 0, fontSize: "1.05rem" }}>Preferences</h2>
+
+        <label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <input type="checkbox" defaultChecked />
+          Email digest with weekly summary of nudges & highlights
+        </label>
+
+        <label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <input type="checkbox" defaultChecked />
+          Prefer gentle language for reminders
+        </label>
+
+        <label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+          }}
+        >
+          <input type="checkbox" />
+          Surface “stretch” relationships (people slightly outside your comfort zone)
+        </label>
+
+        <hr style={{ margin: "0.85rem 0" }} />
+
+        <div>
+          <div style={{ fontSize: "0.8rem", color: "#6b7280" }}>Privacy stance</div>
+          <p
+            style={{
+              margin: "0.3rem 0 0.4rem",
+              color: "#4b5563",
+              lineHeight: 1.5,
+            }}
+          >
+            ReKindle is designed as a private reflection tool first. Data stays tied
+            to your account and is meant to support how you show up—not become
+            another feed.
+          </p>
+        </div>
+
+        <div
+          style={{
+            marginTop: "0.25rem",
+            padding: "0.6rem 0.8rem",
+            borderRadius: "8px",
+            background: "#f9fafb",
+            border: "1px solid #e5e7eb",
+          }}
+        >
+          <strong>Backup & export</strong>
+          <p
+            style={{
+              margin: "0.3rem 0 0.4rem",
+              color: "#4b5563",
+              lineHeight: 1.5,
+            }}
+          >
+            In a future version, you&apos;ll be able to export your notes and
+            relationship data or back them up to your own storage.
+          </p>
+          <button
+            style={{
+              borderRadius: "8px",
+              border: "1px solid #e5e7eb",
+              padding: "0.45rem 0.9rem",
+              cursor: "pointer",
+              background: "#ffffff",
+              fontSize: "0.8rem",
+            }}
+          >
+            ⚙️ View backup & export options
+          </button>
+        </div>
+      </section>
     </div>
   );
 }
